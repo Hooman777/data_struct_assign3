@@ -13,6 +13,7 @@ public class Main {
         test1.addLast(1360);
         System.out.println(test1);
 //        System.out.println(test1.removeLast());
+//        test1.unique();
         System.out.println(test1.unique());
 
         System.out.println(test1);

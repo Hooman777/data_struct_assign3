@@ -56,6 +56,7 @@ public class SinglyLinkedList<E> {
         return output;
     }
     public SinglyLinkedList<E> unique() {
+        if (isEmpty()) return null;
         Node<E> temp = head;
         SinglyLinkedList<E> output = new SinglyLinkedList<>();
         output.addFirst(head.getElement());
@@ -71,9 +72,54 @@ public class SinglyLinkedList<E> {
         size = output.size();
         return output;
     }
+    public SinglyLinkedList<E> merge(SinglyLinkedList<E> l2) {
+        SinglyLinkedList<E> output = new SinglyLinkedList<>();
+        output.head = head;
+        Node<E> temp1 = head;
+        Node<E> temp2 = l2.head;
+        for (int i = 0; i < size; ++i) {
+            output.addLast(temp1.getElement());
+            output.addLast(temp2.getElement());
+//            output.concatenate(output);
+            temp1 = temp1.getNext();
+            temp2 = temp2.getNext();
 
+        }
+        return output;
+    }
+
+//    public SinglyLinkedList<E> merge(SinglyLinkedList<E> l1, SinglyLinkedList<E> l2) {
+//        SinglyLinkedList<E> output = new SinglyLinkedList<>();
+//        Node<E> newHead = l1.head;
+//        Node<E> temp = null;
+//        Node<E> temp1 = l1.head;
+//        Node<E> temp2 = l2.head;
+//
+//        for (int i = 0; i < l1.size(); ++i) {
+//            temp = temp1.getNext();
+//            temp1.setNext(temp2);
+//            temp2.setNext(temp);
+//        }
+//        return output;
+//    }
+    public void concatenate(SinglyLinkedList<E> l2) {
+        if (isEmpty() && l2.isEmpty()) {
+            head = null;
+            tail = null;
+            size = 0;
+        } else if (isEmpty() && !l2.isEmpty()) {
+            head = l2.head;
+            tail = l2.head;
+            size += l2.size();
+        } else if (!isEmpty() && !l2.isEmpty()) {
+            tail.setNext(l2.head);
+            tail = l2.tail;
+            size += l2.size();
+        }
+    }
     @Override
     public String toString() {
+        if (isEmpty()) return "Empty list!";
         Node<E> temp = head;
         StringBuilder output = new StringBuilder("[");
         for (int i = 1; i < size; ++i) {

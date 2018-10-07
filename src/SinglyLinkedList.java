@@ -65,6 +65,26 @@ public class SinglyLinkedList<E>
         if (isEmpty()) head = tail;
         return output;
     }
+    public SinglyLinkedList<E> unique()
+    {
+        Node<E> temp = head;
+        SinglyLinkedList<E> output = new SinglyLinkedList<>();
+        output.addFirst(temp.getElement());
+        for (int i = 1; i < size; ++i)
+        {
+            E check = temp.getElement();
+            temp = temp.getNext();
+            if (check != temp.getElement())
+            {
+                output.addLast(temp.getElement());
+            }
+        }
+        head = output.head;
+        tail = output.tail;
+        size = output.size();
+        return output;
+    }
+
     @Override
     public String toString()
     {
@@ -80,4 +100,5 @@ public class SinglyLinkedList<E>
         output.append("]");
         return output.toString();
     }
+
 }

@@ -1,3 +1,6 @@
+/**
+ * Node class implementation
+ */
 public class Node <E> {
     private E element;
     private Node<E> next;

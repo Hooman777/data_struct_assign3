@@ -1,7 +1,11 @@
+/**
+ * Solution for questions 1 and 3
+ * Singly linked list class implementation
+ */
 public class SinglyLinkedList<E> {
-    private Node<E> head = null;
-    private Node<E> tail = null;
-    private int size = 0;
+    protected Node<E> head = null;
+    protected Node<E> tail = null;
+    protected int size = 0;
     public SinglyLinkedList() {};
     // access methods
     public int size() {
@@ -55,7 +59,7 @@ public class SinglyLinkedList<E> {
         if (isEmpty()) head = tail;
         return output;
     }
-    public SinglyLinkedList<E> unique() {
+    public SinglyLinkedList<E> unique() { // Question 1 **************************
         if (isEmpty()) return null;
         Node<E> temp = head;
         SinglyLinkedList<E> output = new SinglyLinkedList<>();
@@ -72,36 +76,33 @@ public class SinglyLinkedList<E> {
         size = output.size();
         return output;
     }
-    public SinglyLinkedList<E> merge(SinglyLinkedList<E> l2) {
-        SinglyLinkedList<E> output = new SinglyLinkedList<>();
-        output.head = head;
-        Node<E> temp1 = head;
-        Node<E> temp2 = l2.head;
-        for (int i = 0; i < size; ++i) {
-            output.addLast(temp1.getElement());
-            output.addLast(temp2.getElement());
-//            output.concatenate(output);
-            temp1 = temp1.getNext();
-            temp2 = temp2.getNext();
 
+    public SinglyLinkedList<E> merge(SinglyLinkedList<E> l2) { // Question 3 **************************
+        SinglyLinkedList<E> output = new SinglyLinkedList<>();
+        Node<E> newHead = new Node<>(head.getElement(), null);
+        Node<E> temp = newHead;
+        Node<E> temp1 = head.getNext();
+        Node<E> temp2 = l2.head;
+        for (int i = 0; i < (size * 2); ++i) {
+            if (i%2 == 1 && temp1 != null){
+                temp.setNext(temp1);
+                temp = temp.getNext();
+                temp1 = temp1.getNext();
+            }
+            else if (i%2 == 0 && temp2 != null) {
+                temp.setNext(temp2);
+                temp = temp.getNext();
+                temp2 = temp2.getNext();
+            }
         }
+        head = newHead;
+        size += l2.size();
+        output.head = head;
+        output.size = size;
+        output.tail = tail;
         return output;
     }
 
-//    public SinglyLinkedList<E> merge(SinglyLinkedList<E> l1, SinglyLinkedList<E> l2) {
-//        SinglyLinkedList<E> output = new SinglyLinkedList<>();
-//        Node<E> newHead = l1.head;
-//        Node<E> temp = null;
-//        Node<E> temp1 = l1.head;
-//        Node<E> temp2 = l2.head;
-//
-//        for (int i = 0; i < l1.size(); ++i) {
-//            temp = temp1.getNext();
-//            temp1.setNext(temp2);
-//            temp2.setNext(temp);
-//        }
-//        return output;
-//    }
     public void concatenate(SinglyLinkedList<E> l2) {
         if (isEmpty() && l2.isEmpty()) {
             head = null;
@@ -117,6 +118,7 @@ public class SinglyLinkedList<E> {
             size += l2.size();
         }
     }
+
     @Override
     public String toString() {
         if (isEmpty()) return "Empty list!";
